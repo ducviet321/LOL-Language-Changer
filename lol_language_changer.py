@@ -8,6 +8,7 @@ PROCESS_LIST = [
     "LeagueCrashHandler.exe",
     "LeagueClientUxRender.exe",
     "LeagueClientUx.exe",
+    "LeagueClient.exe",
 ]
 
 # language = "en_US"
@@ -36,10 +37,10 @@ def find_lol_path_windows():
 def quit_lol_client():
     # Check if the process is running
     for process in psutil.process_iter():
-        if process.name() == "LeagueClientUx.exe":
+        if process.name() in PROCESS_LIST:
             # Terminate the process
             process.kill()
-            print("The process LeagueClientUx.exe has been terminated.")
+            print(f"{process.name()} has been terminated.")
 
 
 def start_lol_mac():
@@ -63,6 +64,9 @@ def start_lol_windows():
         return
 
     print("Found LOL at", path)
+    label_status.config(text="Doing the magic >:3")
+
+    quit_lol_client()
 
     # Change target to
     # "E:\Riot Games\League of Legends\LeagueClient.exe" --locale=ko_KR
@@ -79,6 +83,9 @@ def start_lol_windows():
 
     # Printing the output
     print(result.stdout)
+
+    label_status.config(text="LOL will start shortly >3<")
+
 
 
 # Define the options
@@ -144,7 +151,7 @@ label_info["justify"] = "left"
 label_info.place(x=10, y=70, width=302, height=75)
 
 label_info2 = tk.Label(root, text="""@TheDuckNiceRight""", fg="darkviolet", cursor="hand2")
-label_info2.bind("<Button-1>", lambda e: webbrowser.open_new("http://www.ecosia.org"))
+label_info2.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/ducviet321/LOL-Language-Changer/"))
 label_info2.place(x=10, y=140, width=302, height=30)
 
 if __name__ == "__main__":
