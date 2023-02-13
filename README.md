@@ -30,7 +30,7 @@ tr_TR: Turkish
 
 # Download
 
-Please find download link in the Release Section
+![Click here to download the latest version](https://github.com/ducviet321/LOL-Language-Changer/releases/latest/download/lol_language_changer.zip)
 
 # Usage
 
