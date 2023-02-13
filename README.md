@@ -2,7 +2,7 @@
 
 ![Screenshot](screenshot.png)
 
-It's 2023 and Riot said in their 2023 season video that LOL Language option is comming at LATER OF THIS YEAR...And I was like: "How hard could it be?". 
+It's 2023 and Riot said in their 2023 season video that LOL Language option is comming at LATER OF THIS YEAR...And I was like: "How hard could it be?".
 
 So, enjoy changing to any of these languages:
 
@@ -27,10 +27,9 @@ ru_RU: Russian
 tr_TR: Turkish
 ```
 
-
 # Download
 
-![Click here to download the latest version](https://github.com/ducviet321/LOL-Language-Changer/releases/latest/download/lol_language_changer.zip)
+[Click here to download the latest version](https://github.com/ducviet321/LOL-Language-Changer/releases/latest/download/lol_language_changer.zip)
 
 # Usage
 
@@ -38,6 +37,7 @@ tr_TR: Turkish
 2. Open this program, select language and click "Change"!
 
 *Note* First time selecting a new language would take ~5 minutes to download it
+
 ![Downloading German Language Pack](german.png)
 
 # To-do
