@@ -44,6 +44,10 @@ tr_TR: Turkish
 
 - Support MacOS
 
+# Build
+
+`pyinstaller --noconfirm --onefile --windowed --icon "E:/EProjects/LOL-Language-Changer/icon.ico"  "E:/EProjects/LOL-Language-Changer/lol_language_changer.py"`
+
 # License
 
 I actually have no idea how licensing works, so if you use it, clone it, do whatever with it, please credit to me, thank you ^3^
