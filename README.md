@@ -40,9 +40,13 @@ tr_TR: Turkish
 
 ![Downloading German Language Pack](german.png)
 
-# To-do
+# Caveats
 
-- Support MacOS
+- The Linux client may get a bit glitchy. If the Riot Games Client launches,it should be in the selected language.
+If it does not let you launch the game due to a greyed out button, simply close the Riot Client and launch League of Legends.exe normally.
+The game should then load and start downloading the new language.
+
+- The Linux client may also take a few minutes to run after the Language Changer window has closed, but the language change will still apply.
 
 # Build
 
