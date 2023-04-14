@@ -33,6 +33,8 @@ tr_TR: Turkish
 
 # Usage
 
+## Windows
+
 1. Make sure to open League Client first.
 2. Open this program, select language and click "Change"!
 
@@ -40,9 +42,26 @@ tr_TR: Turkish
 
 ![Downloading German Language Pack](german.png)
 
-# To-do
+## Linux and macOS
 
-- Support MacOS
+```bash
+# Linux
+./lol_language_changer.py --wineprefix /path/to/install
+
+# macOS native install
+./lol_language_changer.py
+
+# macOS WINE install
+./lol_language_changer.py --mac-wine --wineprefix /path/to/install
+```
+
+# Caveats
+
+- The Linux client may get a bit glitchy. If the Riot Games Client launches,it should be in the selected language.
+If it does not let you launch the game due to a greyed out button, simply close the Riot Client and launch League of Legends.exe normally.
+The game should then load and start downloading the new language.
+
+- The Linux client may also take a few minutes to run after the Language Changer window has closed, but the language change will still apply.
 
 # Build
 
