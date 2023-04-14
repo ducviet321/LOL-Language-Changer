@@ -51,7 +51,7 @@ tr_TR: Turkish
 # macOS native install
 ./lol_language_changer.py
 
-macOS WINE install
+# macOS WINE install
 ./lol_language_changer.py --mac-wine --wineprefix /path/to/install
 ```
 
