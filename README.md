@@ -33,12 +33,27 @@ tr_TR: Turkish
 
 # Usage
 
+## Windows
+
 1. Make sure to open League Client first.
 2. Open this program, select language and click "Change"!
 
 *Note* First time selecting a new language would take ~5 minutes to download it
 
 ![Downloading German Language Pack](german.png)
+
+## Linux and macOS
+
+```bash
+# Linux
+./lol_language_changer.py --wineprefix /path/to/install
+
+# macOS native install
+./lol_language_changer.py
+
+macOS WINE install
+./lol_language_changer.py --mac-wine --wineprefix /path/to/install
+```
 
 # Caveats
 
