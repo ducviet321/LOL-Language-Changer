@@ -269,7 +269,7 @@ def on_click_change():
     elif os_type == "Linux":
         if WINEPREFIX is not None:
             success = start_lol_linux()
-    elif os_type == "macOS":
+    elif os_type == "Darwin":
         if WINEPREFIX is not None:
             success = start_lol_mac_wine()
         else:
