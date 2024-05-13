@@ -7,14 +7,20 @@ import webbrowser
 import os
 import platform
 import argparse
-
+from LeagueClientSettings_yaml_service import YamlWatcher
+from os.path import dirname
+import threading
+import time
+import glob
+import string
+from ctypes import windll
 PROCESS_LIST = [
     "LeagueCrashHandler.exe",
     "LeagueClientUxRender.exe",
     "LeagueClientUx.exe",
     "LeagueClient.exe",
 ]
-
+path = None #"C:\\ProgramData\\Riot Games\\Metadata\\league_of_legends.live\\league_of_legends.live.product_settings.yaml"
 # Parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("-w", "--wineprefix", help="Path to your WINEPREFIX", default=None)
@@ -93,7 +99,28 @@ def start_lol_linux():
     return start_lol_with_wine(args.wineprefix)
 
 
-def find_lol_path_windows():
+
+def get_drives():
+    drives = []
+    bitmask = windll.kernel32.GetLogicalDrives()
+    for letter in string.ascii_uppercase:
+        if bitmask & 1:
+            drives.append(letter)
+        bitmask >>= 1
+    return drives
+    
+def find_lol_live_yaml_windows():
+    finded_files = []
+    base_dir = "\\ProgramData\\Riot Games\\Metadata\\league_of_legends.live"
+    for drive in get_drives():
+        base_dir = drive +":"+"\\ProgramData\\Riot Games\\Metadata\\league_of_legends.live"
+        file_pattern = base_dir + "\\league_of_legends.live.product_settings.yaml"
+        matching_files = glob.glob(file_pattern, recursive=True)
+        for file_path in matching_files:
+            finded_files.append(file_path)
+    return finded_files[0]
+
+def find_lol_path_windows(find_yaml=False):
     """
     Return either Riot Client or League of Legends
 
@@ -102,14 +129,16 @@ def find_lol_path_windows():
     E:\Riot Games\Riot Client\
 
     """
-
-    for process in psutil.process_iter():
-        try:
-            if process.name() in PROCESS_LIST:
-                return process.exe()
-        except (psutil.AccessDenied, psutil.NoSuchProcess):
-            pass
-
+    if(not find_yaml):
+        for process in psutil.process_iter():
+            try:
+                if process.name() in PROCESS_LIST:
+                    return process.exe()
+            except (psutil.AccessDenied, psutil.NoSuchProcess):
+                pass
+    else:
+        path = find_lol_live_yaml_windows()
+        return path  
     return None
 
 
@@ -189,44 +218,61 @@ def start_lol_mac_wine():
 
     return start_lol_with_wine(args.wineprefix)
 
+def start_yaml_service(path,locale_code,client_path):
+    try:
+        service_thread = threading.Thread(target=start_watching_in_background(path,locale_code,client_path), daemon=True)
+        service_thread.start()
+        print("YAML service started successfully.")
+        return True
+    except Exception as e:
+        print(f"Error starting YAML service: {e}")
+        return False
 
+def start_watching_in_background(path,local_code,client_path):
+    watcher = YamlWatcher(path, local_code,client_path)
+    watcher.start_watching()
+    
 def start_lol_windows():
     """
     The command for Windows is
     "E:\Riot Games\League of Legends\LeagueClient.exe" --locale=ko_KR
     """
-
-    path = find_lol_path_windows()
-
+    isYaml = False
+    path = find_lol_path_windows(True)
+    isYaml = True
     if path is None:
         label_status.config(text="Please open LOL Client first ^3^")
         return
-
-    print("Found LOL at", path)
+    
+    
+    if(isYaml):
+        print("Found LOL live Yaml setting file at", path)
+    else:
+        print("Found LOL at", path)
+        
     label_status.config(text="Doing the magic >:3")
 
-    quit_lol_client()
+    #quit_lol_client()
 
     # Change target to
     # "E:\Riot Games\League of Legends\LeagueClient.exe" --locale=ko_KR
-    path = path.split('\\')
-    path[-1] = "LeagueClient.exe"
-    path = '\\'.join(path)
-    argument = "--locale=" + get_selected_language()
+    client_path = find_lol_path_windows()
+    client_path = client_path.split('\\')
+    client_path[-1] = "LeagueClient.exe"
+    client_path = '\\'.join(client_path)
+    #argument = "--locale=" + get_selected_language()
     _result = None
 
     # Start LOL with new language
     try:
-        _result = subprocess.run([path, argument], stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
-        label_status.config(text="LOL will start shortly >3<")
-        print(_result.stdout)
-        return True
+        statusCode = start_yaml_service(path,get_selected_language(),client_path)
+        return statusCode
     except subprocess.CalledProcessError as e:
         label_status.config(text=f"Error: {e}")
-        return False
+        return statusCode
     except Exception as e:
         label_status.config(text=f"Unexpected error: {e}")
-        return False
+        return statusCode
 
 
 # Define the options
@@ -288,6 +334,7 @@ def on_click_change():
 
 
 # Create the window
+
 root = tk.Tk()
 root.title("LOL Language Changer 0.1")
 width = 310
@@ -298,6 +345,7 @@ alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenhei
 root.geometry(alignstr)
 root.resizable(False, False)
 
+global combobox_language
 combobox_language = ttk.Combobox(root, values=list(LANGUAGE_OPTIONS.keys()))
 combobox_language.pack(side=tk.LEFT)
 combobox_language.current(0)
@@ -307,18 +355,23 @@ combobox_language.place(x=15, y=10, width=168, height=30)
 button_change = tk.Button(root, text="Change", command=on_click_change)
 button_change.place(x=195, y=10, width=90, height=30)
 
+global label_status
 label_status = tk.Label(root, text="UwU", fg="red")
 label_status.place(x=10, y=45, width=302, height=35)
 
 label_info = tk.Label(root,
-                      text="""Instruction:\n1. Open League Client.\n2. Select or enter a language code. Eg:
-                      vi_VN\n*Note: Changing language will restart your Client""")
+                        text="""Instruction:\n1. Open League Client.\n2. Select or enter a language code. Eg:
+                        vi_VN\n*Note: Changing language will restart your Client""")
 label_info["justify"] = "left"
 label_info.place(x=10, y=70, width=302, height=75)
 
 label_info2 = tk.Label(root, text="""@TheDuckNiceRight""", fg="darkviolet", cursor="hand2")
 label_info2.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/ducviet321/LOL-Language-Changer/"))
 label_info2.place(x=10, y=140, width=302, height=30)
+
+
+
+
 
 if __name__ == "__main__":
     root.mainloop()

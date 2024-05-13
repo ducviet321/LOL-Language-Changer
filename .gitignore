@@ -2,3 +2,4 @@ build/
 dist/
 output/
 lol_language_changer.spec
+__pycache__/
