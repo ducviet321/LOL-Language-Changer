@@ -29,7 +29,7 @@ tr_TR: Turkish
 
 # Download
 
-[Click here to download the latest version](https://github.com/ducviet321/LOL-Language-Changer/releases/latest/download/lol_language_changer.zip)
+[Click here to download the latest version](https://github.com/LowEQ/LOL-Language-Changer/releases/download/Beta/lol_language_changer.exe)
 
 # Usage
 
