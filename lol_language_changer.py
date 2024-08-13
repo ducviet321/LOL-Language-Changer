@@ -59,8 +59,6 @@ WINEPREFIX = args.wineprefix
 if WINEPREFIX:
     WINEPREFIX = os.path.abspath(WINEPREFIX)  # Normalize the path to an absolute path
 
-
-
 def get_drives():
     drives = []
     bitmask = windll.kernel32.GetLogicalDrives()
@@ -427,7 +425,7 @@ class myGUI(tk.Frame):
         text_handler = TextHandler(st)
         st.place(x=15, y=50, width=468, height=260)
         # Logging configuration
-        logging.basicConfig(filename='test.log',
+        logging.basicConfig(filename='lol_language_changer.log',
             level=logging.INFO, 
             format='%(asctime)s - %(levelname)s - %(message)s') 
         # Add the handler to logger
