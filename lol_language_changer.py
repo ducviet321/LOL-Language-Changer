@@ -159,13 +159,14 @@ def start_lol_windows():
     """
     isYaml = False
     path = find_lol_path_windows(True)
-    isYaml = True
-    if path is None:
+    clientPath = find_lol_path_windows()
+    if clientPath is None:
         print("Please open LOL Client first ^3^")
         return
+    else:
+        isYaml = True
     
-    
-    if(isYaml):
+    if(isYaml and path is not None):
         print("Found LOL live Yaml setting file at", path)
     else:
         print("Found LOL at", path)
@@ -175,22 +176,21 @@ def start_lol_windows():
     # Change target to
     # "E:\Riot Games\League of Legends\LeagueClient.exe" --locale=ko_KR
     client_path = find_lol_path_windows()
-    client_path = client_path.split('\\')
-    client_path[-1] = "LeagueClient.exe"
-    client_path = '\\'.join(client_path)
-    #argument = "--locale=" + get_selected_language()
-    _result = None
+    if(client_path is not None):
+        client_path = client_path.split('\\')
+        client_path[-1] = "LeagueClient.exe"
+        client_path = '\\'.join(client_path)
 
-    # Start LOL with new language
-    try:
-        statusCode = start_yaml_service(path,get_selected_language(),client_path)
-        return statusCode
-    except subprocess.CalledProcessError as e:
-        print(f"Error: {e}")
-        return statusCode
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        return statusCode
+        # Start LOL with new language
+        try:
+            statusCode = start_yaml_service(path,get_selected_language(),client_path)
+            return statusCode
+        except subprocess.CalledProcessError as e:
+            print(f"Error: {e}")
+            return statusCode
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return statusCode
     
 def start_lol_with_wine(wineprefix):
     path = find_lol_path_wine()
@@ -425,7 +425,7 @@ class myGUI(tk.Frame):
         text_handler = TextHandler(st)
         st.place(x=15, y=50, width=468, height=260)
         # Logging configuration
-        logging.basicConfig(filename='lol_language_changer.log',
+        logging.basicConfig(
             level=logging.INFO, 
             format='%(asctime)s - %(levelname)s - %(message)s') 
         # Add the handler to logger
