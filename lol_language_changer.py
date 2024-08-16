@@ -407,7 +407,7 @@ class myGUI(tk.Frame):
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.root.geometry(alignstr)
         self.root.resizable(False, False)
-
+        self.root.iconbitmap("icon.ico")
         global combobox_language
         combobox_language = ttk.Combobox(self.root, values=list(LANGUAGE_OPTIONS.keys()))
         combobox_language.pack(side=tk.LEFT)
