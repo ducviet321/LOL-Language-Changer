@@ -399,7 +399,7 @@ class myGUI(tk.Frame):
 
     def build_gui(self):
         # Create the window
-        self.root.title("LOL Language Changer 1.0")
+        self.root.title("LOL Language Changer 1.01")
         width = 510
         height = 370
         screenwidth = self.root.winfo_screenwidth()
