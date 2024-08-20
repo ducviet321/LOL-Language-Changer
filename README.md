@@ -1,8 +1,8 @@
 # LOL Language Changer
 
-![Screenshot](screenshot.png)
+![Screenshot](/resources/gui.PNG)
 
-It's 2023 and Riot said in their 2023 season video that LOL Language option is comming at LATER OF THIS YEAR...And I was like: "How hard could it be?".
+The language can be changed now from LeagueClient but the in game champion voice are still all in english, unless use this tool.
 
 So, enjoy changing to any of these languages:
 
@@ -29,20 +29,20 @@ tr_TR: Turkish
 
 # Download
 
-[Click here to download the latest version](https://github.com/ducviet321/LOL-Language-Changer/releases/latest/download/lol_language_changer.zip)
+[Click here to download the latest version](https://github.com/LowEQ/LOL-Language-Changer/releases/download/Beta/lol_language_changer.exe)
 
 # Usage
 
 ## Windows
 
 1. Make sure to open League Client first.
-2. Open this program, select language and click "Change"!
+2. Open this program(with admin right), select language and click "Change"!
 
-*Note* First time selecting a new language would take ~5 minutes to download it
+*Note* First time selecting a new language would take ~5 minutes to download it, because added logging to `.log` file to store application logs we need admin right for write and create the log file.
 
-![Downloading German Language Pack](german.png)
+![Downloading German Language Pack](resources/german.png)
 
-## Linux and macOS
+## Linux and macOS (Obsolete)
 
 ```bash
 # Linux
@@ -55,7 +55,7 @@ tr_TR: Turkish
 ./lol_language_changer.py --mac-wine --wineprefix /path/to/install
 ```
 
-# Caveats
+# Caveats (Obsolete)
 
 - The Linux client may get a bit glitchy. If the Riot Games Client launches,it should be in the selected language.
 If it does not let you launch the game due to a greyed out button, simply close the Riot Client and launch League of Legends.exe normally.
@@ -65,10 +65,10 @@ The game should then load and start downloading the new language.
 
 # Build
 
-`pyinstaller --noconfirm --onefile --windowed --icon "E:/EProjects/LOL-Language-Changer/icon.ico"  "E:/EProjects/LOL-Language-Changer/lol_language_changer.py"`
+`pyinstaller --noconfirm --onefile --windowed --icon "D:/Projects/LOL-Language-Changer/icon.ico" --workpath "D:/Projects/LOL-Language-Changer/build" --distpath "D:/Projects/LOL-Language-Changer/dist" --add-data "C:/Python/tcl/tcl8.6;./tcl" --add-data "C:/Python/tcl/tk8.6;./tk" "D:/Projects/LOL-Language-Changer/lol_language_changer.py"`
 
 # License
 
-I actually have no idea how licensing works, so if you use it, clone it, do whatever with it, please credit to me, thank you ^3^
+This project is forked orginally from [Here](https://github.com/ducviet321/LOL-Language-Changer), made it working with windows only other os are not supported. feel free do changes
 
 @TheDuckNiceRight
